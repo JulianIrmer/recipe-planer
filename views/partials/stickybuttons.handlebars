@@ -1,0 +1,38 @@
+<div class="sticky-container">
+    <div class="add-recipe position-absolute">
+        <span class="js-open-add-formular">+</span>
+    </div>
+</div>
+
+{{> addrecipeformular}}
+
+<link rel="stylesheet" href="/css/tingle.css">
+<script src="/js/tingle.min.js"></script>
+<style>
+    .sticky-container {
+        position: fixed;
+        right: 85px;
+        bottom: 85px;
+        z-index: 2;
+    }
+
+    .add-recipe {
+        border-radius: 50%;
+        width: 75px;
+        height: 75px;
+        font-size: 72px;
+        background-color: #f7996e;
+    }
+
+    .add-recipe span {
+        position: absolute;
+        top: -32%;
+        left: 18%;
+    }
+
+    .show-formular {
+        opacity: 1;
+        z-index: 3;
+        display: fixed;
+    }
+</style>

@@ -1,0 +1,33 @@
+<div class="recipe-tile p-4">
+    <h3 class="border-bottom">{{recipe.title}}</h3>
+    <div class="ingredients-container">
+        <ul>
+            {{#each recipe.ingredients}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="tag-container row g-0 w-100">
+        {{#each recipe.tags}}
+            <div class="col-auto recipe-tag p-2">{{this}}</div>
+        {{/each}}
+    </div>
+</div>
+
+<style>
+    .recipe-tile {
+        height: auto;
+        width: auto;
+        background-color: #684756;
+        border-radius: 4px;
+        position: relative;
+    }
+
+    .recipe-tag {
+        background-color: #f3e9dc;
+        color: #1a1423;
+        border-radius: 6px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+</style>

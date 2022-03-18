@@ -1,0 +1,30 @@
+{
+  "name": "recipe-planer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulianIrmer/recipe-planer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulianIrmer/recipe-planer/issues"
+  },
+  "homepage": "https://github.com/JulianIrmer/recipe-planer#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "helmet": "^5.0.2",
+    "mongoose": "^6.2.7",
+    "morgan": "^1.10.0"
+  }
+}
