@@ -1,5 +1,9 @@
 <div class="recipe-tile p-4">
-    <h3 class="border-bottom">{{recipe.title}}</h3>
+    <div class="js-delete-recipe" data-id="{{recipe._id}}">X</div>
+    <div class="row g-0 border-bottom pb-1">
+        <h3 class="col-auto">{{recipe.title}}</h3>
+        <div class="js-edit-recipe col material-icons" data-id="{{recipe._id}}">edit</div>
+    </div>
     <div class="ingredients-container">
         <ul>
             {{#each recipe.ingredients}}
@@ -29,5 +33,12 @@
         border-radius: 6px;
         margin-right: 10px;
         margin-bottom: 10px;
+    }
+
+    .js-delete-recipe {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #f7996e;
     }
 </style>

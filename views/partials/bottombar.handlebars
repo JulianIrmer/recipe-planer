@@ -1,0 +1,50 @@
+<div class="bottombar-container row g-0 d-flex">
+    <a href="/render/content" class="d-flex justify-content-center text-decoration-none bottombar-item content">
+        <div class="material-icons">add</div>
+    </a>
+    <a href="/render/recipeplan" class="d-flex justify-content-center text-decoration-none bottombar-item recipeplan">
+        <div class="material-icons">calendar_month</div>
+    </a>
+    <a href="/render/home" class="d-flex justify-content-center text-decoration-none bottombar-item home">
+        <div class="material-icons">home</div>
+    </a>
+    <a href="/render/statistics" class="d-flex justify-content-center text-decoration-none bottombar-item statistics">
+        <div class="material-icons">leaderboard</div>
+    </a>
+    <a href="/render/settings" class="d-flex justify-content-center text-decoration-none bottombar-item settings">
+        <div class="material-icons">settings</div>
+    </a>
+</div>
+
+
+<style>
+    body {
+        margin-bottom: 70px;
+    }
+
+    .bottombar-container {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        height: 60px;
+        z-index: 2;
+        width: 100%;
+        background-color: #1a1423;
+        border-top: 1px solid #f3e9dc;
+        align-content: center;
+    }
+
+    .bottombar-item {
+        width: calc(100vw / 5);
+        font-size: 45px;
+        color: #f3e9dc;
+    }
+
+    .bottombar-item .material-icons {
+        font-size: 45px !important;
+    }
+
+    .material-icons-active {
+        color: #f7996e;
+    }
+</style>

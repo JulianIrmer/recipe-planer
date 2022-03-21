@@ -29,6 +29,7 @@ app.use(helmet());
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 app.use(morgan('tiny', { stream: accessLogStream }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // MONGO CONNECTION
 mongoose.connect(process.env.DB_URL)
@@ -37,7 +38,7 @@ mongoose.connect(process.env.DB_URL)
 
 // ROUTES
 app.use('/', homeController);
-app.use('/recipes', recipeController);
+app.use('/api/recipes', recipeController);
 
 // START SERVER
 app.listen(PORT, () => {

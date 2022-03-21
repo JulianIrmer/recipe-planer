@@ -5,7 +5,8 @@ const RecipeSchema = new mongoose.Schema({
     tags: {type: Array, required: true, unique: false},
     ingredients: {type: Array, required: true, unique: false},
     image: {type: String, required: false},
-    forTwoDays: {type: Boolean, required: true, unique: false}
+    forTwoDays: {type: Boolean, required: false, unique: false},
+    price: {type: Number, required: false, unique: false},
 }, {collection: 'recipes'});
 
 module.exports = mongoose.model('Recipe', RecipeSchema);

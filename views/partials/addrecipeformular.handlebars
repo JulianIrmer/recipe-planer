@@ -2,16 +2,22 @@
     <h3>Rezept Hinzufügen</h3>
     <form class="js-form" action="">
         <label for="">Titel</label>
-        <input id="title" name="title" class="w-100 mb-3" type="text" placeholder="Title">
-        <label for="">Ingredients</label>
-        <input id="ingredients" name="ingredients" class="w-100 mb-3" type="text" placeholder="Ingredients">
+        <input id="title" name="title" class="js-form-title w-100 mb-3" type="text" placeholder="Title">
+        <label for="">Ingredients (comma separated list)</label>
+        <input id="ingredients" name="ingredients" class="js-form-ingredients w-100 mb-3" type="text" placeholder="Ingredients">
         <label for="">Tags (comma separated list)</label>
-        <input id="tags" name="tags" class="w-100 mb-3" type="text" placeholder="Tags, comma separated">
-        <input id="for2days" type="checkbox" name="for2days">
+        <input id="tags" name="tags" class="w-100 mb-3 js-form-tags" type="text" placeholder="Tags, comma separated">
+        <input id="for2days" class="js-form-for2days" type="checkbox" name="for2days">
         <label class="mb-3" for="">For two days?</label>
+        <label for="">Price</label>
+        <select name="price" class="w-100 mb-3 js-form-price">
+            <option value="1">€</option>
+            <option value="2">€€</option>
+            <option value="3">€€€</option>
+        </select>
     </form>
         <div class="w-100 mb-3">
-            <div class="js-add-recipe-btn btn btn-primary">
+            <div class="js-add-recipe-btn btn btn-primary" data-action="add">
                 Hinzufügen
             </div>
         </div>

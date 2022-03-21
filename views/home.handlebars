@@ -1,20 +1,11 @@
-<div class="nav-contaienr row w-100 g-0">
-    {{> navigation}}
-</div>
-
+{{> recipeplanpreview plan=recipeplan}}
+{{> latestrecipes recipes=recipes}}
 
 <div class="container">
     <div class="row d-flex">
-        <a href="/content" class="text-decoration-none">
-            <button class="btn btn-secondary">
-                Browse All Recipes!
-            </button>
-        </a>
-
-        <a href="/repiceplan" class="text-decoration-none">
-            <button class="btn btn-primary">
-                Generate Plan!
-            </button>
-        </a>
+        {{> button href="/content" linkclass="text-decoration-none" btnclass="btn btn-secondary" cta="Browse All Recipes"}}
+        {{> button href="/recipeplan" linkclass="text-decoration-none" btnclass="btn btn-primary" cta="Generate Plan!"}}
     </div>
 </div>
+
+{{> bottombar}}

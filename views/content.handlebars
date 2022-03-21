@@ -1,10 +1,10 @@
-{{> navigation}}
-{{> stickybuttons}}
 CONTENT
-<div class="row p-4">
+<div class="row p-4 g-0">
     {{#each content}}
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
             {{> recipeTile recipe=this}}
         </div>
     {{/each}}
 </div>
+
+{{> bottombar}}
