@@ -42,7 +42,7 @@ mongoose.connect(process.env.DB_URL)
 // ROUTES
 app.use('/recipes', recipeRoutes);
 app.use('/plan', planRoutes);
-app.use('/home', homeRoutes);
+app.use('/', homeRoutes);
 app.use('/statistics', statisticsRoutes);
 app.use('/settings', settingsRoutes);
 
