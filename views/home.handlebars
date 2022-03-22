@@ -1,10 +1,12 @@
-{{> recipeplanpreview plan=recipeplan}}
+{{> recipeplanpreview plan=recipeplan todaysRecipe=todaysRecipe}}
 {{> latestrecipes recipes=recipes}}
+
+{{plan}}
 
 <div class="container">
     <div class="row d-flex">
-        {{> button href="/content" linkclass="text-decoration-none" btnclass="btn btn-secondary" cta="Browse All Recipes"}}
-        {{> button href="/recipeplan" linkclass="text-decoration-none" btnclass="btn btn-primary" cta="Generate Plan!"}}
+        {{> button href="/recipes" linkclass="text-decoration-none" btnclass="btn btn-secondary" cta="Browse All Recipes"}}
+        {{> button href="/plan" linkclass="text-decoration-none" btnclass="btn btn-primary" cta="Generate Plan!"}}
     </div>
 </div>
 

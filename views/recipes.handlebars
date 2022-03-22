@@ -1,0 +1,23 @@
+<div class="row p-4 g-0">
+    <div class="container">
+        {{> button href="/recipes/add" linkclass="text-decoration-none" btnclass="btn btn-secondary w-100" cta="Add Recipe!"}}
+    </div>
+
+    {{#each recipes}}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            {{> recipeTile recipe=this}}
+        </div>
+    {{/each}}
+</div>
+
+<script src="./js/components/recipe.js"></script>
+<style>
+    .delete-right {
+        transform: scaleY(0);
+        opacity: 1;
+        overflow: hidden;
+        transition: all 300ms ease-in-out;
+    }
+</style>
+
+{{> bottombar}}

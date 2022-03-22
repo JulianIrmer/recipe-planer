@@ -9,8 +9,11 @@ const bodyParser = require('body-parser');
 const {engine} = require('express-handlebars');
 
 // ROUTE IMPORTS
-const homeController = require('./routes/home');
-const recipeController = require('./routes/recipes');
+const recipeRoutes = require('./routes/recipeRoutes');
+const planRoutes = require('./routes/planRoutes');
+const homeRoutes = require('./routes/homeRoutes');
+const statisticsRoutes = require('./routes/statisticsRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
 
 // CONFIG
 require('dotenv').config();
@@ -37,8 +40,11 @@ mongoose.connect(process.env.DB_URL)
     .catch(error => console.error(error));
 
 // ROUTES
-app.use('/', homeController);
-app.use('/api/recipes', recipeController);
+app.use('/recipes', recipeRoutes);
+app.use('/plan', planRoutes);
+app.use('/home', homeRoutes);
+app.use('/statistics', statisticsRoutes);
+app.use('/settings', settingsRoutes);
 
 // START SERVER
 app.listen(PORT, () => {

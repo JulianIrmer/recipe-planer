@@ -1,0 +1,15 @@
+<div class="container">
+    <h3>Einen neuen Plan erstellen</h3>
+    <form action="/plan/api" method="post">
+        <label for="start-date">Start</label>
+        <input type="date" class="js-start-date" name="startDate">
+
+        <label for="end-date">Ende</label>
+        <input type="date" class="js-end-date" name="endDate">
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<script src="../js/components/plan.js"></script>
+
+{{> bottombar}}

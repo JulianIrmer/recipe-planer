@@ -10,37 +10,65 @@ const hb = require('express-handlebars').create({
     }}
 });
 
-module.exports.get = async (req, res) => {
-    const recipes = await getRecipes(req.query.id);
+module.exports.render = async (req, res) => {
+    const recipes = await get();
 
     if (recipes.length === 0) {
         Error.sendError('No docs found', 404, res);
         return;
     }
 
-    res.status(200).send({data: recipes});
+    res.status(200).render('recipes', {recipes});
 };
 
-module.exports.getRecipes = async (id, amount) => {
+module.exports.renderAdd = async (req, res) => {
+    res.render('addrecipe');
+};
+
+module.exports.renderUpdate = async (req, res) => {
+    const {id} = req.query;
+    const recipe = await Recipe.findOne({_id: id}).lean();
+    res.render('updaterecipe', {recipe});
+};
+
+async function get(id, amount) {
     const query = id ? {_id: id} : {};
-    let recipes = await (await Recipe.find(query).lean()).reverse();
+    let recipes = (await Recipe.find(query).lean()).reverse();
     if (amount) {
         recipes.length = amount;
     }
     return recipes;
 }
+module.exports.get = get;
 
 module.exports.add = (req, res) => {
-    const recipe = new Recipe(req.body);
-    recipe.save((err, doc) => {
+    const data = getformattedData(req.body);
+    console.log(data);
+    const recipe = new Recipe(data);
+
+    recipe.save((err) => {
         if (err) {
-            console.log(err.message);
-            res.status(200).send({success: false, error: err.message});
+            res.render('addrecipe', {error: err.message});
         } else {
-            res.status(203).send({success: true, data: doc});
+            res.redirect('/recipes');
         }
     });
 };
+
+function getformattedData(data) {
+    const ingredients = data.ingredients.split(',');
+    data.ingredients = ingredients;
+    const tags = data.tags.split(',');
+    data.tags = tags;
+
+    if (data.for2days) {
+        data.for2days = true;
+    } else {
+        data.for2days = false;
+    }
+
+    return data;
+}
 
 module.exports.update = async (req, res) => {
     const {id, title, tags, ingredients} = req.body;

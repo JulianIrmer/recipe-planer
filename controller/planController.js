@@ -1,24 +1,51 @@
-const RecipePlan = require('../models/RecipePlan');
-const recipesController = require('./recipes');
-const defaultConfig = {
-    duration: 7
-}
+const Plan = require('../models/RecipePlan');
+const recipesController = require('./recipeController');
 
-module.exports.generatePlan = async (startDate, endDate) => {
-    const recipes = await recipesController.getRecipes();
-    const data = generate(recipes, startDate, endDate);
-    const recipePlan = new RecipePlan(data);
-    recipePlan.save();
+module.exports.render = async (req, res) => {
+    const plans = await getPlan();
+
+    res.render('plan', {plans});
 };
 
-module.exports.getPlan = async () => {
-    const plan = await RecipePlan.find({active: true}).lean();
-    console.log(plan);
+module.exports.renderAdd = async (req, res) => {
+    res.render('addplan');
+};
+
+module.exports.delete = async (req, res) => {
+    Plan.findOneAndDelete({_id: req.query.id}, () => {
+        res.status(200).send('deleted');
+    });
+};
+
+module.exports.add = async (req, res) => {
+    const recipes = await recipesController.get();
+    const data = generate(recipes, req.body.startDate, req.body.endDate);
+    if (!data) {
+        res.redirect('/recipe/addplan');
+        return;
+    }
+
+    const plan = new Plan(data);
+
+    plan.save((err) => {
+        if (err) {
+            res.redirect('/recipe/addplan');
+        } else {
+            res.redirect('/plan');
+        }
+    });
+};
+
+async function getPlan() {
+    const plan = await Plan.find().lean();
     return plan;
 }
 
+module.exports.getPlan = getPlan;
+
 function generate(recipes, startDate, endDate) {
-    const dateData = getDateDate(startDate, endDate);
+    const dateData = getDateData(startDate, endDate);
+    if (!dateData) return false;
     const obj = {
         start: dateData.start,
         end: dateData.end,
@@ -71,28 +98,17 @@ function isRecipeValid(currentRecipe, oldRecipe, daysLeft, recipes) {
     return true;
 }
 
-function getDateDate(startDateObj, endDateObj) {
-    const obj = {
-        start: null,
-        end: null,
-        duration: null
-    };
-
+function getDateData(startDate, endDate) {
+    const obj = {};
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-    const start = new Date();
-    start.setDate(startDateObj.date);
-    start.setMonth(startDateObj.month);
-    start.setYear(startDateObj.year);
-
-    const end = new Date();
-    end.setDate(endDateObj.date);
-    end.setMonth(endDateObj.month);
-    end.setYear(endDateObj.year);
-
-    obj.duration = Math.round((end.getDate() - start.getDate()) / 1000 / 60 / 60 / 24);
+    obj.duration = Math.round((end.getDate() - start.getDate())) + 1;
     obj.start = start.toLocaleDateString('de-DE', options);
     obj.end = end.toLocaleDateString('de-DE', options);
+
+    if (obj.duration < 1) return false;
 
     return obj;
 }
