@@ -29,8 +29,8 @@ app.use(express.static(__dirname + '/views'));
 // MIDDLEWARE
 app.use(cors());
 app.use(helmet());
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
-app.use(morgan('tiny', { stream: accessLogStream }));
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+// app.use(morgan('tiny', { stream: accessLogStream }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
