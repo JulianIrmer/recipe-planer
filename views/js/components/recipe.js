@@ -12,7 +12,7 @@ function deleteRecipe() {
         btn.addEventListener('click', () => {
             const {id} = btn.dataset;
             if (!id) return;
-            const parent = btn.parentElement.parentElement;
+            const parent = document.querySelector(`.recipe-tile-container[data-id="${id}"]`);
 
             fetch(`/recipes/api?id=${id}`, {method: 'DELETE'});
             parent.classList.add('delete-right');

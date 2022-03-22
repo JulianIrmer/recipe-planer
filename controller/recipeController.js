@@ -31,6 +31,12 @@ module.exports.renderUpdate = async (req, res) => {
     res.render('updaterecipe', {recipe});
 };
 
+module.exports.renderRecipe = async (req, res) => {
+    const {id} = req.params;
+    const recipe = await Recipe.findOne({_id: id}).lean();
+    res.render('recipe', {recipe});
+};
+
 async function get(id, amount) {
     const query = id ? {_id: id} : {};
     let recipes = (await Recipe.find(query).lean()).reverse();
@@ -43,7 +49,6 @@ module.exports.get = get;
 
 module.exports.add = (req, res) => {
     const data = getformattedData(req.body);
-    console.log(data);
     const recipe = new Recipe(data);
 
     recipe.save((err) => {
@@ -60,6 +65,7 @@ function getformattedData(data) {
     data.ingredients = ingredients;
     const tags = data.tags.split(',');
     data.tags = tags;
+    data.timesMade = 0;
 
     if (data.for2days) {
         data.for2days = true;
@@ -71,7 +77,7 @@ function getformattedData(data) {
 }
 
 module.exports.update = async (req, res) => {
-    const {id, title, tags, ingredients} = req.body;
+    const {id, title, tags, ingredients, price} = req.body;
     const recipe = await Recipe.findOne({_id: id});
 
     if (recipe.length === 0) {
@@ -82,13 +88,15 @@ module.exports.update = async (req, res) => {
     if (title) recipe.title = title;
     if (tags) recipe.tags = tags;
     if (ingredients) recipe.ingredients = ingredients;
+    if (price) recipe.price = price;
 
-    recipe.save((err, doc) => {
+    recipe.save(async (err) => {
         if (err) {
             console.log(err.message);
-            res.status(200).send({success: false, error: err.message});
+            res.render('updaterecipe', {error: err.message});
         } else {
-            res.status(203).send({success: true, data: doc});
+            const recipes = await get();
+            res.redirect('/', {recipes});
         }
     });
 };

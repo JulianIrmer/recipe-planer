@@ -1,17 +1,45 @@
 <div class="container">
-    {{> button href="/plan/add" btnclass="js-open-modal btn btn-secondary w-100 my-4" cta="Generate new Plan!"}}
+    {{> button href="/plan/add" btnclass="btn btn-secondary w-100 my-4" cta="Generate new Plan!"}}
 </div>
 {{#each plans}}
-    <div class="plan-container container border-bottom position-relative">
-        <div class="js-delete-plan" data-id="{{this._id}}">X</div>
-        <h3>Plan für die nächsten {{this.duration}} Tage:</h3>
+    <div class="plan-container container border-bottom position-relative" data-id="{{this._id}}">
+        <div class="row g-0">
+            <div class="col">
+                <h3>Plan für die nächsten {{this.duration}} Tage:</h3>
+            </div>
+            <div class="col-auto js-delete-plan material-icons" data-id="{{this._id}}">
+                delete
+            </div>
+        </div>
         <p>Von {{this.start}} bis {{this.end}}</p>
 
-        <ul>
+        <ul class="list-unstyled ms-3">
             {{#each this.recipes}}
-                <li>
-                    <div class="js-open-modal" data-id="{{this._id}}">
-                        {{this.title}}
+                <li class="mb-2">
+                    <div class="row g-0">
+                        <div class="col-1">
+                            <input 
+                                class="js-check-recipe" 
+                                type="checkbox" 
+                                {{#if this.isChecked}}checked{{/if}}
+                                data-recipe-id="{{this.recipe._id}}"
+                                data-plan-id="{{../this._id}}"
+                            >
+                            {{this.isChecked}}
+                        </div>
+                        <div class="col-11">
+                            <span class="text-muted">
+                                {{this.displayDate}}
+                            </span>
+                            <span>
+                                -
+                            </span>
+                            <span class="fw-bold">
+                                <a href="/recipes/{{this.recipe._id}}">
+                                    {{this.recipe.title}}
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </li>
             {{/each}}
@@ -30,9 +58,6 @@
     }
 
     .js-delete-plan {
-        position: absolute;
-        top: 10px;
-        right: 10px;
         color: #f7996e;
     }
 </style>

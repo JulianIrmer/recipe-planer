@@ -2,7 +2,7 @@ const Plan = require('../models/RecipePlan');
 const recipesController = require('./recipeController');
 
 module.exports.render = async (req, res) => {
-    const plans = await getPlan();
+    const plans = await getPlans();
 
     res.render('plan', {plans});
 };
@@ -17,11 +17,32 @@ module.exports.delete = async (req, res) => {
     });
 };
 
+module.exports.update = async (req, res) => {
+    const {planId, recipeId} = req.query;;
+    let plan = await Plan.findOne({_id: planId});
+    plan = checkRecipeInPlan(plan, recipeId);
+    plan.markModified('recipes');
+    plan.save((err, doc) => {
+        console.log(doc);
+        res.status(200).send({doc});
+
+    });
+};
+
+function checkRecipeInPlan(plan, recipeId) {
+    for (let i = 0; i < plan.recipes.length; i++) {
+        if (plan.recipes[i].recipe._id.toString() === recipeId) {
+            plan.recipes[i].recipe.isChecked = !plan.recipes[i].recipe.isChecked;
+        }
+    }
+    return plan;
+}
+
 module.exports.add = async (req, res) => {
     const recipes = await recipesController.get();
     const data = generate(recipes, req.body.startDate, req.body.endDate);
     if (!data) {
-        res.redirect('/recipe/addplan');
+        res.redirect('/recipes/addplan');
         return;
     }
 
@@ -29,15 +50,20 @@ module.exports.add = async (req, res) => {
 
     plan.save((err) => {
         if (err) {
-            res.redirect('/recipe/addplan');
+            res.redirect('/recipes/addplan');
         } else {
             res.redirect('/plan');
         }
     });
 };
 
-async function getPlan() {
+async function getPlans() {
     const plan = await Plan.find().lean();
+    return plan;
+}
+
+async function getPlan() {
+    const plan = await Plan.findOne().lean();
     return plan;
 }
 
@@ -63,9 +89,23 @@ function generate(recipes, startDate, endDate) {
         const recipe = recipes[randomIndex];
 
         if (isRecipeValid(recipe, obj.recipes[counter - 1], daysLeft, obj.recipes)) {
-            obj.recipes.push(recipe);
+            let dateOfRecipe = new Date(startDate);
+            const options = { weekday: 'long', month: 'numeric', day: 'numeric' };
+            recipe.isChecked = false;
+            dateOfRecipe.setDate(dateOfRecipe.getDate() + counter);
+            obj.recipes.push({
+                recipe, 
+                originalDate: dateOfRecipe.setHours(0, 0, 0, 0),
+                displayDate: dateOfRecipe.toLocaleDateString('de-DE', options)
+            });
+
             if (recipe.forTwoDays) {
-                obj.recipes.push(recipe);
+                dateOfRecipe.setDate(dateOfRecipe.getDate() + 1);
+                obj.recipes.push({
+                    recipe,
+                    originalDate: dateOfRecipe.setHours(0, 0, 0, 0),
+                    displayDate: dateOfRecipe.toLocaleDateString('de-DE', options)
+                });
                 daysLeft -= 2;
                 counter += 2;
             } else {
@@ -75,9 +115,6 @@ function generate(recipes, startDate, endDate) {
         }
     }
 
-    for (let el of obj.recipes) {
-        console.log(el.title);
-    }
     return obj;
 }
 
@@ -90,7 +127,7 @@ function isRecipeValid(currentRecipe, oldRecipe, daysLeft, recipes) {
     }
 
     for (let i = 0; i < currentRecipe.tags.length; i++) {
-        if (oldRecipe.tags.indexOf(currentRecipe.tags[i]) > -1) {
+        if (oldRecipe.recipe.tags.indexOf(currentRecipe.tags[i]) > -1) {
             return false;
         }
     }

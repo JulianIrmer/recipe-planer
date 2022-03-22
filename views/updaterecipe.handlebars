@@ -1,37 +1,30 @@
-<h3>Rezept Hinzufügen</h3>
-<form class="js-form" action="">
+<form class="p-5" action="/recipes/api/update" method="post">
+    <h3>Rezept Updaten</h3>
+    <input type="hidden" class="d-none" name="id" value="{{recipe._id}}">
     <label for="">Titel</label>
     <input id="title" name="title" class="js-form-title w-100 mb-3" type="text" placeholder="Title" value="{{recipe.title}}">
     <label for="">Ingredients (comma separated list)</label>
     <input id="ingredients" name="ingredients" class="js-form-ingredients w-100 mb-3" type="text" placeholder="Ingredients" value="{{recipe.ingredients}}">
     <label for="">Tags (comma separated list)</label>
     <input id="tags" name="tags" class="w-100 mb-3 js-form-tags" type="text" placeholder="Tags, comma separated" value="{{recipe.tags}}">
-    <input id="for2days" class="js-form-for2days" type="checkbox" name="for2days">
-    <label class="mb-3" for="" checked="{{recipe.for2days}}">For two days?</label>
+    <div class="w-100">
+        <input id="for2days" class="js-form-for2days" type="checkbox" name="for2days">
+        <label class="mb-3" for="" checked="{{recipe.for2days}}">For two days?</label>
+    </div>
     <label for="">Price</label>
     <select name="price" class="w-100 mb-3 js-form-price">
-        {{!-- {{#ifCond recipe.price 1}}
             <option value="1" selected="true">€</option>
-        {{else}}
-            <option value="" selected="false">€</option>
-        {{/ifCond}}
-        {{#ifCond recipe.price 2}}
             <option value="2" selected="true">€€</option>
-        {{else}}
-            <option value="2" selected="false">€€</option>
-        {{/ifCond}}
-        {{#ifCond recipe.price 3}}
             <option value="3" selected="true">€€€</option>
-        {{else}}
-            <option value="3" selected="false">€€€</option>
-        {{/ifCond}} --}}
     </select>
-</form>
     <div class="w-100 mb-3">
-        <div class="js-add-recipe-btn btn btn-primary" data-action="update" data-id="{{recipe._id}}">
+        <button type="submit" class="btn btn-primary">
             Speichern
         </div>
     </div>
+</form>
+
+{{> bottombar}}
 
 <style>
     .formular-container {

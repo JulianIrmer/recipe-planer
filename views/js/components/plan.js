@@ -3,6 +3,7 @@ init();
 function init() {
     addDatePickerLogic();
     deletePlan();
+    checkRecipe();
 }
 
 function addDatePickerLogic() {
@@ -37,13 +38,25 @@ function deletePlan() {
         btn.addEventListener('click', () => {
             const {id} = btn.dataset;
             if (!id) return;
-            const parent = btn.parentElement;
+            const parent = document.querySelector(`.plan-container[data-id="${id}"]`);
 
             fetch(`/plan/api?id=${id}`, {method: 'DELETE'});
             parent.classList.add('delete-right');
             parent.addEventListener('transitionend', () => {
                 parent.remove();
             });
+        });
+    });
+}
+
+function checkRecipe() {
+    const checkboxes = document.querySelectorAll('.js-check-recipe');
+    if (checkboxes.length === 0) return;
+
+    checkboxes.forEach((box) => {
+        box.addEventListener('click', () => {
+            const {planId, recipeId} = box.dataset;
+            fetch(`plan/api?planId=${planId}&recipeId=${recipeId}`, {method: 'PATCH'});
         });
     });
 }

@@ -6,11 +6,12 @@ const recipesController = require('../controller/recipeController');
 router.get('/', recipesController.render);
 router.get('/update', recipesController.renderUpdate);
 router.get('/add', recipesController.renderAdd);
+router.get('/:id', recipesController.renderRecipe);
 
 // API Methods
 router.get('/api', recipesController.get);
 router.post('/api', recipesController.add);
-router.patch('/api', recipesController.update);
+router.post('/api/update', recipesController.update);
 router.delete('/api', recipesController.delete);
 
 module.exports = router;

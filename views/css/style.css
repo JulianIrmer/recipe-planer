@@ -1,0 +1,25 @@
+
+    .recipe-tile {
+        height: auto;
+        width: auto;
+        background-color: #684756;
+        border-radius: 4px;
+        position: relative;
+    }
+
+    .recipe-tag {
+        background-color: #f3e9dc;
+        color: #1a1423;
+        border-radius: 6px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .js-delete-recipe {
+        color: #f7996e;
+        font-size: 30px;
+    }
+    .js-edit-recipe {
+        color: #f7996e;
+        font-size: 30px;
+    }

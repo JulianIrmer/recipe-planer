@@ -1,9 +1,9 @@
-<div class="recipe-tile p-4" data-id="{{recipe._id}}">
+<div class="recipe-tile p-4">
     <div class="row g-0 border-bottom pb-1">
         <h3 class="col-9">{{recipe.title}}</h3>
         <div class="col-auto d-flex">
             <div class="p-2" data-id="{{recipe._id}}">
-                <a class="material-icons js-edit-recipe" href="/recipes/update?id={{recipe._id}}">edit</a>
+                <a class="material-icons js-edit-recipe" href="/recipe/update?id={{recipe._id}}">edit</a>
             </div>
             <div class="js-delete-recipe material-icons p-2" data-id="{{recipe._id}}">delete</div>
         </div>
@@ -21,3 +21,5 @@
         {{/each}}
     </div>
 </div>
+
+{{> bottombar}}
