@@ -1,4 +1,4 @@
-const Plan = require('../models/RecipePlan');
+const Plan = require('../models/recipePlan');
 const recipesController = require('./recipeController');
 
 module.exports.render = async (req, res) => {
