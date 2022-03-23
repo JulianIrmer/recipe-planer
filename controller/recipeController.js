@@ -18,7 +18,13 @@ module.exports.render = async (req, res) => {
         return;
     }
 
-    res.status(200).render('recipes', {recipes});
+    res.status(200).render('recipes', {recipes, helpers: {
+        ifCond: (v1, v2, options) => {
+            if(v1 === v2) {
+                return options.fn(this);
+            }
+            return options.inverse(this);
+    }}});
 };
 
 module.exports.renderAdd = async (req, res) => {
@@ -38,12 +44,16 @@ module.exports.renderRecipe = async (req, res) => {
 };
 
 async function get(id, amount) {
-    const query = id ? {_id: id} : {};
-    let recipes = (await Recipe.find(query).lean()).reverse();
-    if (amount) {
-        recipes.length = amount;
+    try {
+        const query = id ? {_id: id} : {};
+        let recipes = (await Recipe.find(query).lean()).reverse();
+        if (amount) {
+            recipes.length = amount;
+        }
+        return recipes;
+    } catch (error) {
+        console.error(error);
     }
-    return recipes;
 }
 module.exports.get = get;
 
@@ -61,9 +71,14 @@ module.exports.add = (req, res) => {
 };
 
 function getformattedData(data) {
-    const ingredients = data.ingredients.split(',');
+    let {ingredients, tags} = data;
+    if (typeof ingredients === 'string') {
+        ingredients = data.ingredients.split(',');
+    }
     data.ingredients = ingredients;
-    const tags = data.tags.split(',');
+    if (typeof tags === 'string') {
+        tags = data.tags.split(',');
+    }
     data.tags = tags;
     data.timesMade = 0;
 
