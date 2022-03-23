@@ -1,11 +1,17 @@
 <div class="recipe-tile p-4" data-id="{{recipe._id}}">
     <div class="row g-0 border-bottom pb-1">
-        <h3 class="col-9">{{recipe.title}}</h3>
-        <div class="col-auto d-flex">
-            <div class="p-2" data-id="{{recipe._id}}">
-                <a class="material-icons js-edit-recipe" href="/recipes/update?id={{recipe._id}}">edit</a>
-            </div>
-            <div class="js-delete-recipe material-icons p-2" data-id="{{recipe._id}}">delete</div>
+        <h3 class="col-12 d-flex align-items-center mb-0">{{recipe.title}}</h3>
+        
+        <div class="row g-0">
+            {{#ifCond this.price 1}}
+                <p class="p-0 m-0 material-icons fs-6 price-icon-color">euro</p>
+            {{/ifCond}}
+            {{#ifCond this.price 2}}
+                <p class="p-0 m-0 material-icons fs-6 price-icon-color">euro euro</p>
+            {{/ifCond}}
+            {{#ifCond this.price 3}}
+                <p class="p-0 m-0 material-icons fs-6 price-icon-color">euro euro euro</p>
+            {{/ifCond}}
         </div>
     </div>
     <div class="ingredients-container">
@@ -15,9 +21,14 @@
             {{/each}}
         </ul>
     </div>
-    <div class="tag-container row g-0 w-100">
+    <div class="tag-container row g-0 w-100 botder-bottom">
         {{#each recipe.tags}}
             <div class="col-auto recipe-tag p-2">{{this}}</div>
         {{/each}}
+    </div>
+
+    <div class="col-auto d-flex align-items-center justify-content-end">
+        <a class="material-icons js-edit-recipe" href="/recipes/update?id={{recipe._id}}">edit</a>
+        <div class="js-delete-recipe material-icons p-2" data-id="{{recipe._id}}">delete</div>
     </div>
 </div>
