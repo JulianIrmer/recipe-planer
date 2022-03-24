@@ -1,0 +1,17 @@
+<div class="row g-0">
+    <div class="col">
+        <h3>Plan für die nächsten {{plan.duration}} Tage:</h3>
+    </div>
+    <div class="col-auto js-delete-plan material-icons" data-id="{{plan._id}}">
+        delete
+    </div>
+</div>
+<p>Von {{plan.start}} bis {{plan.end}}</p>
+
+<ul class="list-unstyled ms-3">
+    {{#each plan.recipes}}
+    <li class="mb-2">
+        {{> recipeli recipe=this planid=../this.plan._id}}
+    </li>
+    {{/each}}
+</ul>

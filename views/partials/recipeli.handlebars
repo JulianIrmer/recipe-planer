@@ -1,0 +1,32 @@
+<div class="js-li-item row g-0" data-recipe-id="{{recipe.recipe._id}}">
+    <div class="col-1">
+        <input 
+            class="js-check-recipe" 
+            type="checkbox" 
+            {{#if recipe.isChecked}}checked{{/if}}
+            data-recipe-id="{{recipe.recipe._id}}"
+            data-plan-id="{{planid}}"
+        >
+        {{recipe.isChecked}}
+    </div>
+    <div class="col-10">
+        <span class="text-muted">
+            {{recipe.displayDate}}
+        </span>
+        <span>
+            -
+        </span>
+        <span class="fw-bold">
+            <a href="/recipes/{{recipe.recipe._id}}">
+                {{recipe.recipe.title}}
+            </a>
+        </span>
+    </div>
+    <div 
+        class="js-reroll-recipe col-1 material-icons d-flex justify-content-end" 
+        data-plan-id="{{planid}}" 
+        data-recipe-id="{{recipe.recipe._id}}"
+    >
+        rotate_left
+    </div>
+</div>

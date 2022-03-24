@@ -4,6 +4,7 @@ function init() {
     addDatePickerLogic();
     deletePlan();
     checkRecipe();
+    rerollRecipe();
 }
 
 function addDatePickerLogic() {
@@ -47,6 +48,37 @@ function deletePlan() {
             });
         });
     });
+}
+
+function rerollRecipe() {
+    const buttons = document.querySelectorAll('.js-reroll-recipe');
+    if (buttons.length === 0) return;
+
+    buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            updateRecipe(btn);
+        });
+    });
+}
+
+async function updateRecipe(btn) {
+    const {planId, recipeId} = btn.dataset;
+    const container = document.querySelector(`.plan-container[data-id="${planId}"]`);
+    const allLis = container.querySelectorAll(`.js-li-item[data-recipe-id="${recipeId}"]`);
+    allLis.forEach((li) => {
+        li.innerHTML = '<div class="loader"></div>';
+    });
+
+    const url = `/plan/api/addnewrecipe?planId=${planId}&recipeId=${recipeId}`;
+    const rawResponse = await fetch(url);
+    const response = await rawResponse.json();
+
+    for (let i = 0; i < allLis.length; i++) {
+        allLis[i].parentElement.innerHTML = response.html[i];
+        container.querySelector(`.js-reroll-recipe[data-recipe-id="${response.ids[i]}"]`).addEventListener('click', function() {
+            updateRecipe(this);
+        });
+    }
 }
 
 function checkRecipe() {

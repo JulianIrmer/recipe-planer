@@ -7,6 +7,7 @@ router.get('/', planController.render);
 router.get('/add', planController.renderAdd);
 
 // API Methods
+router.get('/api/addnewrecipe', planController.getNewRecipe);
 router.post('/api', planController.add);
 router.patch('/api', planController.update);
 router.delete('/api', planController.delete);
