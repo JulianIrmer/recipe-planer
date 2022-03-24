@@ -2,48 +2,8 @@
     {{> button href="/plan/add" btnclass="btn btn-secondary w-100 my-4" cta="Generate new Plan!"}}
 </div>
 {{#each plans}}
-    <div class="plan-container container border-bottom position-relative" data-id="{{this._id}}">
-        <div class="row g-0">
-            <div class="col">
-                <h3>Plan für die nächsten {{this.duration}} Tage:</h3>
-            </div>
-            <div class="col-auto js-delete-plan material-icons" data-id="{{this._id}}">
-                delete
-            </div>
-        </div>
-        <p>Von {{this.start}} bis {{this.end}}</p>
-
-        <ul class="list-unstyled ms-3">
-            {{#each this.recipes}}
-                <li class="mb-2">
-                    <div class="row g-0">
-                        <div class="col-1">
-                            <input 
-                                class="js-check-recipe" 
-                                type="checkbox" 
-                                {{#if this.isChecked}}checked{{/if}}
-                                data-recipe-id="{{this.recipe._id}}"
-                                data-plan-id="{{../this._id}}"
-                            >
-                            {{this.isChecked}}
-                        </div>
-                        <div class="col-11">
-                            <span class="text-muted">
-                                {{this.displayDate}}
-                            </span>
-                            <span>
-                                -
-                            </span>
-                            <span class="fw-bold">
-                                <a href="/recipes/{{this.recipe._id}}">
-                                    {{this.recipe.title}}
-                                </a>
-                            </span>
-                        </div>
-                    </div>
-                </li>
-            {{/each}}
-        </ul>
+    <div class="plan-container container border-bottom position-relative mb-4" data-id="{{this._id}}">
+        {{> plantile plan=this}}
     </div>
 {{/each}}
 
