@@ -1,4 +1,19 @@
 
+body {
+    padding: 0;
+    background-color: #1a1423;
+    color: #f3e9dc;
+    overflow-x: hidden;
+}
+
+.body-wrapper {
+    max-width: 768px;
+}
+
+a {
+    color: #f3e9dc;
+    text-decoration: none;
+}
 .recipe-tile {
     height: auto;
     width: auto;
