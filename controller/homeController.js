@@ -14,11 +14,12 @@ module.exports.renderHome = async (req, res) => {
 };
 
 function getTodaysRecipe(plan) {
-    const today = new Date().setHours(0, 0, 0, 0);
+    const options = { weekday: 'long', month: 'numeric', day: 'numeric' };
+    const today = new Date().toLocaleDateString('de-DE', options);
 
     for (let i = 0; i < plan.recipes.length; i++) {
-        const {originalDate} = plan.recipes[i];
-        if (today === originalDate) {
+        const {displayDate} = plan.recipes[i];
+        if (today === displayDate) {
             return plan.recipes[i].recipe;
         }
     }
