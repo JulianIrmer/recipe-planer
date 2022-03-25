@@ -1,4 +1,4 @@
-<div class="row g-0">
+<div class="row g-0 {{cssClass}}">
     <div class="col">
         <h3>Plan für die nächsten {{plan.duration}} Tage:</h3>
     </div>
@@ -15,3 +15,7 @@
     </li>
     {{/each}}
 </ul>
+
+{{#if addBottombar}}
+    {{> bottombar}}
+{{/if}}

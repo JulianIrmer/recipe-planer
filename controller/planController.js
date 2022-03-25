@@ -12,6 +12,11 @@ module.exports.renderAdd = async (req, res) => {
     res.render('addplan');
 };
 
+module.exports.renderPlanTile = async (req, res) => {
+    const plan = await getPlan(req.params.id);
+    res.render('./partials/plantile.handlebars', {plan, cssClass: "pt-4", addBottombar: true});
+};
+
 module.exports.delete = async (req, res) => {
     Plan.findOneAndDelete({_id: req.query.id}, () => {
         res.status(200).send('deleted');
@@ -223,10 +228,6 @@ function getDateData(startDate, endDate) {
 
     return obj;
 }
-
-async function renderPlanTile(plan) {
-    return await hb.render('./views/partials/plantile.handlebars', {plan});
-};
 
 async function renderPlanListElement(planid, recipe) {
     return await hb.render('./views/partials/recipeli.handlebars', {planid, recipe});
