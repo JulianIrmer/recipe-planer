@@ -1,16 +1,22 @@
 <div class="recipe-tile p-4" data-id="{{recipe._id}}">
     <div class="row g-0 border-bottom pb-1">
-        <h3 class="col-12 d-flex align-items-center mb-0">{{recipe.title}}</h3>
+        <h3 class="col-12 d-flex align-items-center mb-0">
+            {{recipe.title}}
+        </h3>
         
         <div class="row g-0">
-            {{#ifCond this.price 1}}
-                <p class="p-0 m-0 material-icons fs-6 price-icon-color">euro</p>
+            {{#ifCond this.price "1"}}
+                <p class="d-flex align-items-center col-auto p-0 m-0 material-icons fs-6 price-icon-color">euro</p>
             {{/ifCond}}
-            {{#ifCond this.price 2}}
-                <p class="p-0 m-0 material-icons fs-6 price-icon-color">euro euro</p>
+            {{#ifCond this.price "2"}}
+                <p class="d-flex align-items-center col-auto p-0 m-0 material-icons fs-6 price-icon-color">euro euro</p>
             {{/ifCond}}
-            {{#ifCond this.price 3}}
-                <p class="p-0 m-0 material-icons fs-6 price-icon-color">euro euro euro</p>
+            {{#ifCond this.price "3"}}
+                <p class="d-flex align-items-center col-auto p-0 m-0 material-icons fs-6 price-icon-color">euro euro euro</p>
+            {{/ifCond}}
+
+            {{#ifCond true recipe.forTwoDays}}
+                <p class="col-auto p-0 ps-2 m-0 material-icons fs-4 d-flex align-items-center two-days-icon">looks_two</p>
             {{/ifCond}}
         </div>
     </div>
@@ -23,7 +29,19 @@
     </div>
     <div class="tag-container row g-0 w-100 botder-bottom">
         {{#each recipe.tags}}
-            <div class="col-auto recipe-tag p-2">{{this}}</div>
+            {{#ifCond this ../selectedFilter}}
+                <div class="col-auto recipe-tag p-2 selected">
+                    <a href="/recipes">
+                        {{../this}}
+                    </a>
+                </div>
+            {{else}}
+                <div class="col-auto recipe-tag p-2">
+                    <a href="/recipes?filter={{../this}}">
+                        {{../this}}
+                    </a>
+                </div>
+            {{/ifCond}}
         {{/each}}
     </div>
 

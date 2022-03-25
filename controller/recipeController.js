@@ -11,14 +11,15 @@ const hb = require('express-handlebars').create({
 });
 
 module.exports.render = async (req, res) => {
-    const recipes = await get();
+    const selectedFilter = req.query.filter;
+    const recipes = await get(null, null, selectedFilter);
 
     if (recipes.length === 0) {
         Error.sendError('No docs found', 404, res);
         return;
     }
 
-    res.status(200).render('recipes', {recipes, helpers: {
+    res.status(200).render('recipes', {selectedFilter, recipes, helpers: {
         ifCond: (v1, v2, options) => {
             if(v1 === v2) {
                 return options.fn(this);
@@ -43,9 +44,10 @@ module.exports.renderRecipe = async (req, res) => {
     res.render('recipe', {recipe});
 };
 
-async function get(id, amount) {
+async function get(id, amount, filter) {
     try {
-        const query = id ? {_id: id} : {};
+        let query = id ? {_id: id} : {};
+        query = filter ? {tags: filter} : query;
         let recipes = (await Recipe.find(query).lean()).reverse();
         if (amount) {
             recipes.length = amount;

@@ -23,11 +23,20 @@ a {
 }
 
 .recipe-tag {
-    background-color: #f3e9dc;
+    background-color: #d6cdc2;
     color: #1a1423;
     border-radius: 6px;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+.recipe-tag.selected {
+    background-color: #f3e9dc;
+    font-weight: bold;
+}
+
+.recipe-tag a {
+    color: #1a1423;
 }
 
 .js-delete-recipe {
@@ -38,7 +47,7 @@ a {
     color: #f7996e;
     font-size: 30px;
 }
-
+.two-days-icon,
 .price-icon-color {
     color: #f7996e;
 }

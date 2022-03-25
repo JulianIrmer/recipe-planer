@@ -2,10 +2,9 @@
     <div class="container mb-4">
         {{> button href="/recipes/add" linkclass="text-decoration-none" btnclass="btn btn-secondary w-100" cta="Add Recipe!"}}
     </div>
-
     {{#each recipes}}
         <div class="recipe-tile-container col-12 mb-4" data-id="{{this._id}}">
-            {{> recipeTile recipe=this}}
+            {{> recipeTile recipe=this selectedFilter=../selectedFilter}}
         </div>
     {{/each}}
 </div>
