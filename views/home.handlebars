@@ -1,16 +1,19 @@
-<div class="container p-4">
-    <div class="container mb-4 pb-4 border-bottom">
+<div class="pt-4">
+    <div class="mb-4 pb-4 border-bottom d-flex flex-column">
         {{#if todaysRecipe}}
-            <h3>Was gibt es heute?</h3>
-            <a href="/recipes/{{todaysRecipe._id}}">{{todaysRecipe.title}}</a>
-            <a href="/plan/{{plan._id}}">Gesamten Plan anschauen</a>
+            <h1>Was gibt es heute?</h1>
+
+            <a href="/recipes/{{todaysRecipe._id}}"><h3>{{todaysRecipe.title}}</h3></a>
+            <a href="/plan/{{plan._id}}">
+                <button class="btn btn-secondary mt-2">Gesamten Plan anschauen</button>
+            </a>
         {{else}}
-            <h3>Du hast noch keinen Plan erstellt</h3>
+            <h1>Kein Plan für heute verfügbar</h1>
             {{> button href="/plan/add" linkclass="text-decoration-none" btnclass="btn btn-primary" cta="Plan erstellen!"}}
         {{/if}}
     </div>
 
-    <div class="container">
+    <div class="">
         {{> latestrecipes recipes=recipes}}
         {{> button href="/recipes" linkclass="text-decoration-none" btnclass="btn btn-secondary" cta="Browse All Recipes"}}
     </div>
